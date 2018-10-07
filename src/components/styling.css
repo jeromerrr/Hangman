@@ -1,0 +1,190 @@
+/* FONTS */
+@font-face {
+  font-family: 'Vlump Black';
+  src: url('/Users/jeromemac/Development/hangman_game/public/Vlump Black.ttf');
+}
+
+@font-face {
+  font-family: 'DJB WERECOW OF DANVILLE';
+  src: url('/Users/jeromemac/Development/hangman_game/public/DJB WERECOW OF DANVILLE.ttf');
+}
+
+
+/* ANIMATIONS */
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  25% {
+    transform: scale3d(1.025, 1.025, 1.025);
+    word-spacing: 10px;
+  }
+
+  50% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 1.05, 1.05);
+    word-spacing: 20px;
+  }
+
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes shake {
+  from,
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  20%,
+  60%,
+  90% {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+
+  40%,
+  80% {
+    transform: translate3d(5px, 0, 0);
+  }
+}
+
+
+/* INTROPAGE STYLING */
+.introPage{
+  background: radial-gradient(circle 1800px, red, black);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.introTitle{
+  font-family: 'Vlump Black', sans-serif;
+  font-size: 4.5em;
+  margin-bottom: 1%;
+  animation: heartbeat 3s infinite;
+}
+
+.introSubtitle{
+  font-family: 'DJB WERECOW OF DANVILLE', serif;
+  font-size: 1.5em;
+  color: black;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  letter-spacing: 1vw;
+}
+
+.introButton{
+  background: black;
+  color: white;
+  border: none;
+  min-width: 10vw;
+  min-height: 3vh;
+  font-size: 1em;
+  font-family: 'Vlump Black', sans-serif;
+  margin-top: 1%;
+}
+
+.introButton:hover{
+  background: white;
+  color: black;
+  border: none;
+  min-width: 10vw;
+  min-height: 3vh;
+  font-size: 1em;
+  font-family: 'Vlump Black', sans-serif;
+  animation: shake .25s;
+}
+
+
+/* GAME STYLING */
+
+#letters-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+}
+
+.userInput{
+  font-family: 'DJB WERECOW OF DANVILLE', serif;
+  font-size: 1.5em;
+}
+
+.textInputWrap{
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: .25em;
+  border: .25em solid rgba(0, 0, 0, 0.59);
+  min-width: 11vw;
+  max-width: 11vw;
+  min-height: 7vh;
+  min-height: 7vh;
+}
+
+#wordGuess{
+  background: none;
+  border: none;
+  border-bottom: .05em solid black;
+  min-width: 10vw;
+  max-width: 10vw;
+  min-height: 6vh;
+  min-height: 6vh;
+  font-size: 4.5em;
+}
+
+.letters{
+  font-size: 6em;
+  min-width: 1em;
+  color: black;
+  font-family: 'DJB WERECOW OF DANVILLE', sans-serif;
+  margin-bottom: 1%;
+}
+
+#c{
+  /* margin-left: -5%;
+  margin-right:-5%; */
+  color: green;
+}
+
+
+/* HANGMAN TESTING: */
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 2s linear forwards;
+}
+
+.head{
+
+}
