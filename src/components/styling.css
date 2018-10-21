@@ -96,17 +96,37 @@
 }
 
 
-
-
-@keyframes zoomIn {
+/* @keyframes zoomIn {
   0% {
     transform:scale(1);
   }
   100% {
     transform:scale(1.5);
   }
+} */
+
+
+@keyframes bob {
+  0% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+  50% {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
+  }
+  100% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
 }
 
+@keyframes bob-float {
+  100% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+}
 
 /* INTROPAGE STYLING */
 .introPage{
@@ -203,7 +223,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
-  margin-top: -10%;
+  
 }
 
 /* .userInput{
@@ -239,7 +259,8 @@
   font-family: 'evil_of_frankenstein', sans-serif;
   margin-bottom: 3vh;
   line-height: 80%;
-  margin-top: 200%;
+
+  text-align: center;
 }
 
 /* #c{
@@ -274,12 +295,22 @@
   font-size: 1em;
   margin-left: .5px;
   margin-right: .5px;
+
+  animation-name: bob-float, bob;
+  animation-duration: .3s, 1.5s;
+  animation-delay: 0s, .3s;
+  animation-timing-function: ease-out, ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards;
+  animation-direction: normal, alternate;
 }
 
 .alphabetClass:disabled{
   background: green;
   color: white;
-  opacity: 0.5
+  opacity: 0.5;
+  animation-play-state: paused;
+  transform: translateY(-8px);
 }
 
 
@@ -297,6 +328,8 @@
   margin-left: .5px;
   margin-right: .5px;
   font-family: 'djb_werecow_of_danville', serif;
+  animation: shake .25s;
+  transform: translateY(8px);
 }
 
 .alphabetClassWrong:before{
@@ -309,7 +342,7 @@
   position: absolute;
   margin-left: -.5%;
   margin-top: -.5%;
-  
+  transform: translateY(1px);
 }
 
 
@@ -351,7 +384,7 @@
   align-items: center;
 }
 
-.wrongLettersContainer{
+/* .wrongLettersContainer{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -364,18 +397,11 @@
   font-size: 1.5em;
   font-family: 'djb_werecow_of_danville', serif;
   margin-top: 0%;
-}
+} */
 
 .wrongLetters{
-  /* color:#FFF8D2; */
   text-decoration-line: line-through;
-  /* font-size: 1.5em; */
   margin-right: 2vw;
-  /* font-family: 'djb_werecow_of_danville', serif; */
   text-align: center;
   margin-top: -10%;
 }
-
-/* .shit{
-  height: 50px;
-} */

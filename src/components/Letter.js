@@ -5,8 +5,7 @@ class Letter extends Component {
   render() {
 
     return (
-      <div>
-        <p className="letters" id={`${this.props.eachLetter}`}> {`${this.props.eachLetter}`} </p>
+      <div className="letters" id={`${this.props.eachLetter}`}> {`${this.props.eachLetter}`} 
       </div>
     );
   }
