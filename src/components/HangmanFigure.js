@@ -1,32 +1,63 @@
 import React, { Component } from 'react';
-// import { figure1, figure2, figure3, figure4, figure5 } from '../public/stick_figure'
+import figure1 from '../assets/stick_figure/figure1.svg'
+import figure2 from '../assets/stick_figure/figure2.svg'
+import figure3 from '../assets/stick_figure/figure3.svg'
+import figure4 from '../assets/stick_figure/figure4.svg'
+import figure5 from '../assets/stick_figure/figure5.svg'
+import figure6 from '../assets/stick_figure/figure6.svg'
+
 
 class HangmanFigure extends Component {
 
+
+//BUG: NOTE - COPY OF ORIGINAL (FOR TESTING) FIGURE COMPONENT - SVG IMAGE DOES NOT LOAD UNLESS THERE IS A <P></P> ELEMENT BEFORE IT 
+
   render() {
-    console.log(`figure${this.props.wrongGuess.length}`);
+
+    var figure = hangFigureSwitch(this.props.wrongGuess.length)
+
+    function hangFigureSwitch(expr){
+      switch(expr){
+        case 0:
+          console.log("WRONGGUESS LENGTH::: ", expr);
+        break
+        case 1:
+          console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure1
+        break
+        case 2:
+          console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure2
+        break
+        case 3:
+          console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure3
+        break
+        case 4:
+          console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure4
+        break
+        case 5:
+          console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure5
+        break
+        case 6:
+          console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure6
+        break
+      }
+    }
+
+
+
     return (
-      <div>
-        <p id="hangman">
-        INSERT HANGMAN FIGURE
-        </p>
+      
 
-        <svg class="path" width="100" height="100">
-          <circle cx="50" cy="50" r="40" stroke="black" stroke-width="4" fill="none" />
-        </svg>
+          
+       
+        <img className="shit" src={figure}/>
 
-        <img src={`../public/stick_figure/figure${this.props.wrongGuess.length}`}/>
-
-        <img src={`/Users/jeromemac/Development/hangman_game/public/stick_figure/figure${this.props.wrongGuess.length}.svg`}/>
-
-        <img src='../public/stick_figure/figure1.svg'/>
-
-        <img src="/Users/jeromemac/Development/hangman_game/public/stick_figure/figure2.svg"/>
-
-        <img src="/Users/jeromemac/Development/hangman_game/public/favicon.ico"/>
-
-
-      </div>
+      
     );
   }
 }

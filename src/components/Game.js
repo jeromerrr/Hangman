@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
 import './styling.css'
 import Letter from './Letter'
-import WrongWords from './WrongWords'
-import HangmanFigure from './HangmanFigure'
-import Alphabet from './Alphabet'
+// import WrongWords from './WrongWords'
+// import HangmanFigure from './HangmanFigure'
+// import Alphabet from './Alphabet'
+// import { log } from 'handlebars';
+
+import figure1 from '../assets/stick_figure/figure1.svg'
+import figure2 from '../assets/stick_figure/figure2.svg'
+import figure3 from '../assets/stick_figure/figure3.svg'
+import figure4 from '../assets/stick_figure/figure4.svg'
+import figure5 from '../assets/stick_figure/figure5.svg'
+import figure6 from '../assets/stick_figure/figure6.svg'
+
+// import Hangperson from './Hangperson'
+
+
+import randomWords from 'random-words'
+
 
 class Game extends Component {
   constructor(props){
     super(props)
+
+    this.myRef = React.createRef()
+
+
     this.state = {
       guess: "",
       hangWord: "",
@@ -16,7 +34,10 @@ class Game extends Component {
       wrongGuess: [],
       allGuesses: [],
       displayedWord: [],
-      alphabet: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+      alphabet: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+      buttonDisabled: false,
+      changeAlphabetClass: true
+      
     }
   }
 
@@ -36,23 +57,35 @@ class Game extends Component {
   //Called when startGame button is clicked
   //Words are displayed as <P> in render below
   setHangWord = () => {
-    let wordArray = ["cat", "dog", "mouse", "bear", "monkey", "rhino", "triceratops"]
-    let singleWord = wordArray[Math.floor(Math.random() * wordArray.length)]
+    // let el = document.getElementsByClassName('alphabetClass')
+    // console.log("DOCUMENTCLASS::: ", el);
+    // el.disabled=false
+
+
+    //NOTE: wordArray is only used for development & testing
+    // let wordArray = ["cat", "dog", "mouse", "bear", "monkey", "rhino", "triceratops"]
+    // let singleWord = wordArray[Math.floor(Math.random() * wordArray.length)]
+
+    //NOTE: using random-words package to get a random word
+    let singleWord = randomWords()
+
     let splitLetters = singleWord.split("")
     console.log("RANDOM WORD: " + splitLetters);
-    this.setState({hangWord: singleWord, hangLetters: splitLetters, guess: "", correctGuess: [], wrongGuess: [], allGuesses: []}, function(){
+    this.setState({hangWord: singleWord, hangLetters: splitLetters, guess: "", correctGuess: [], wrongGuess: [], allGuesses: [], buttonDisabled:"", changeAlphabetClass: ""}, function(){
       this.displayBlanks()
     })
   }
     //TURN LETTERS INTO BLANKS - CALLBACK FUNCTION
       displayBlanks = () => {
-        console.log("displayBlanks START:::");
+        // console.log("displayBlanks START:::");
+
         let hangLetters = this.state.hangLetters
         let blanks = this.state.hangLetters.map(letter => {
           return "_"
         })
-        console.log("Here are the blanks: " + blanks);
-        this.setState({displayedWord: blanks})
+        // console.log("Here are the blanks: " + blanks);
+        this.setState({displayedWord: blanks, buttonDisabled: false, changeAlphabetClass: true})
+        // console.log("DISPLAYBLANKS::: ", this.state.changeAlphabetClass );
       }
 
 
@@ -62,19 +95,25 @@ class Game extends Component {
   //BUG: if user types in word that has been used already then PROMPT user to use another word - use another state for that
 
   handleGuess = (e) => {
+    e.preventDefault()
     let letterInputted = e.currentTarget.value.toLowerCase()
+    e.currentTarget.disabled = true
+    let passCurrentTarget = e.currentTarget
+    console.log(letterInputted);
+
     this.setState({guess: letterInputted, allGuesses: [...this.state.allGuesses, letterInputted]}, function(){
-      this.checkGuess()
+      this.checkGuess(passCurrentTarget)
     })
-    //setTimout clears the form after 1.5secs
-    setTimeout(function () {
-      document.getElementById('wordGuess').value = '';
-    }, 1000);
+    //setTimout clears the form after 1.5secs - note used anymore - not using input field - now using buttons
+    // setTimeout(function () {
+    //   document.getElementById('wordGuess').value = '';
+    // }, 1000);
+    
   }
 
 
     //CALLBACK FUNCTION 1 OF 2  to check the letter vs the word
-    checkGuess = () => {
+    checkGuess = (passCurrentTarget) => {
       let letterInputed = this.state.guess
       // console.log('CHECKGUESS RUNNING!');
       // console.log("-checking state: " + this.state.guess);
@@ -89,46 +128,23 @@ class Game extends Component {
             //
             // checkDupesGuesses()
 
-      if(this.state.hangLetters.includes(letterInputed)){
+      if(this.state.wrongGuess.includes(letterInputed)){
+        alert("letter used already, try another")
+      }else if(this.state.hangLetters.includes(letterInputed)){
         this.setState({correctGuess: [...this.state.correctGuess, letterInputed]}, function(){
           this.blanksToWords()
         })
-        // console.log("correctGuess= " + this.state.correctGuess);
-        // alert("YASSS")
       } else {
+        passCurrentTarget.className = 'alphabetClassWrong'
         this.setState({wrongGuess: [...this.state.wrongGuess, letterInputed]}, function(){
           this.checkWin()
         })
-        // console.log("wrongGuess= " + this.state.wrongGuess);
-        // alert("NAH BEE")
       }
     }
-          // //OLD FUNCTION - NOT USED
-          // blanksToWordsOLD = () => {
-          //   // console.log("BLANKSTOWORDS START:::");
-          //   let hangLetters = this.state.hangLetters
-          //   let displayedWord = [...this.state.displayedWord] //spread operator makes a copy of this.state.displayedWord
-          //   let letterInputted = this.state.guess
-          //
-          //   // console.log("-hangLetters: " + hangLetters);
-          //   // console.log("-displayedWord: " + displayedWord);
-          //   // console.log("-letterInputted: " + letterInputted);
-          //
-          //   let guessToSplice = hangLetters.indexOf(letterInputted) //should log a number ex. 2
-          //   // console.log("-guessToSplice: " + guessToSplice);
-          //   // console.log("displayedWord before splicing: " + displayedWord);
-          //   displayedWord.splice(guessToSplice, 1, letterInputted) //mutates the copy of this.state.displayedWords
-          //   // console.log("-splicedGuess: " + splicedGuess);
-          //
-          //   this.setState({displayedWord: displayedWord}, function(){
-          //     this.checkWin()
-          //   })
-          //   // console.log("-*State of displayed word: " + this.state.displayedWord);
-          // }
 
           //TURN BLANKS TO WORDS (updates dispalyedWord) -CALLBACK FUNCTION on checkGuess IF (correct) statement
           blanksToWords = () => {
-            console.log("BLANKSTOWORDS -> GETALLINDEXES");
+            // console.log("BLANKSTOWORDS -> GETALLINDEXES");
             // console.log("BLANKSTOWORDS START:::");
             let hangLetters = this.state.hangLetters
             let displayedWord = [...this.state.displayedWord] //spread operator makes a copy of this.state.displayedWord
@@ -176,7 +192,7 @@ class Game extends Component {
         // console.log("-user inputed :" + this.state.guess);
         // console.log("correct guess array: " + this.state.correctGuess);
         // console.log("wrong guess array: " + this.state.wrongGuess);
-        // console.log("moves left: " + (6-this.state.wrongGuess.length));
+        console.log("moves left: " + (6-this.state.wrongGuess.length));
         let letterInputted = this.state.guess
         //BUG: make winning === if correct guess equals hangletters
 
@@ -187,110 +203,124 @@ class Game extends Component {
         }
       }
 
-        //OLD WAY OF CHECKING WIN BY ARRAY LENGTH: if((this.state.correctGuess.includes(this.state.hangLetters.toString)) === true) {
-        // // if(this.state.correctGuess.includes === this.state.hangLetters.length){
-        //
-        //   alert("You WIN!")
-        // } else if(this.state.wrongGuess.length === 6){
-        //   alert("You LOSE")
-        // }
-        // console.log("-All guesses (end): " + this.state.allGuesses);
-
-//EXAMPLE OF A SETSTATE CALLBACK FUNCTION
-//Sets State, then calls another function - good way to ensure state is set correctly and then links other functions chronologically
-// changeTitle: function changeTitle (event) {
-//   this.setState({ title: event.target.value }, function() {
-//     this.validateTitle();
-//   });
-//
-// },
-// validateTitle: function validateTitle () {
-//   if (this.state.title.length === 0) {
-//     this.setState({ titleError: "Title can't be blank" });
-//   }
-// },
-
 doNothing = (e) => {
     e.preventDefault()
 }
 
-//BUG: THIS IS JUST TO TEST THE ALPHABET PASSING E.TARGET.VALUE BEFORE LINKING IT WITH HANDLEGUESS
-clickWorks = (e) => {
-  let save = e.currentTarget.value
-  console.log("ALPHABET STATE::: " + this.state.alphabet);
-  console.log("TARGET ID = " + e.target.id);
-  console.log("TARGET VALUE= " + e.currentTarget.value);
-  console.log("SAVE VARIABLE= " + save);
-  return alert(e.currentTarget.value)
-}
-
-// renderEachAlphabetLetter = () => {
-//   this.state.alphabet.map(eachAlphabetLetter => {
-//   console.log(`${eachAlphabetLetter}`);
-//   return(
-//     <button value={eachAlphabetLetter} id={eachAlphabetLetter} onClick={this.clickWorks}>
-//       <p> {eachAlphabetLetter}</p>
-//     </button>
-//     )
-//   })
+//NOTE: function below tests value returned by alphabet buttons
+// clickWorks = (e) => {
+//   let save = e.currentTarget.value
+//   console.log("ALPHABET STATE::: " + this.state.alphabet);
+//   console.log("TARGET ID = " + e.target.id);
+//   console.log("TARGET VALUE= " + e.currentTarget.value);
+//   console.log("SAVE VARIABLE= " + save);
+//   return alert(e.currentTarget.value)
 // }
 
+
+
+
 render() {
-  console.log('GAME IS RERENDERING -500');
+  // console.log('GAME IS RERENDERING -500');
   let { hangLetters, displayedWord } = this.state //may not need this afterall - replaced it with displayedWord
   // let { displayedWord } = this.state
   // let { alphabet } = this.state
-  console.log("**CHECKING DISPLAYEDWORD:" + displayedWord);
+  // console.log("**CHECKING DISPLAYEDWORD:" + displayedWord);
+
+  
+
+  var alphabetClassChanger = this.state.changeAlphabetClass ? 'alphabetClass' : 'alphabetClassWrong'
+
+  var figure = hangFigureSwitch(this.state.wrongGuess.length)
+
+    function hangFigureSwitch(expr){
+      switch(expr){
+        default:
+          // console.log("WRONGGUESS LENGTH::: ", expr);
+        break
+        case 1:
+          // console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure1
+        break
+        case 2:
+          // console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure2
+        break
+        case 3:
+          // console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure3
+        break
+        case 4:
+          // console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure4
+        break
+        case 5:
+          // console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure5
+        break
+        case 6:
+          // console.log("WRONGGUESS LENGTH::: ", expr);
+          return figure6
+        break
+      }
+    }
+
+
+    //BUG: DIVS BELOW ARE FOR HANGFIGURE COMPONENTS - THEY DO NOT WORK - SEE COMPONENTS FOR EXPLANATION
+  //   <div>
+  //   <Hangperson wrongGuess={this.state.wrongGuess}/>
+  // </div>
+
+
+  //   <div>
+  //     <HangmanFigure wrongGuess={this.state.wrongGuess}/>
+  //   </div>
+
+
+//   <div className="wrongGuessLetters">
+//   <WrongWords wrongGuess={this.state.wrongGuess} />
+// </div>
+
 
     return (
-      <div className="introPage">
+      <div className="gamePage">
+
+        <img src={figure} className="hangFigure" alt=""/>
 
 
-        <div>
-          <HangmanFigure wrongGuess={this.state.wrongGuess}/>
-        </div>
-
-        <div id="letters-container">
-          {displayedWord.map(eachLetter => {
+        <div className="hangLettersContainer">
+          {displayedWord.map((eachLetter, index) => {
               return (
-                <Letter eachLetter = {eachLetter}/>
+                <Letter 
+                eachLetter = {eachLetter}
+                key = {`eachLetter + ${index}`}/>
               )
           })}
         </div>
 
-          <form className="userInput" onChange={this.handleGuess} onSubmit={this.doNothing}>
-            <label>
-              Type in a letter:
-              <br/>
-              <div class="textInputWrap">
-                <input type="text" id="wordGuess" maxLength="1" placeholder="..."/>
-              </div>
-            </label>
-          </form>
+        <div className="alphabetLettersContainer">
+          {this.state.alphabet.map(eachAlphabetLetter => {
+            return(
+              <button 
+                value={eachAlphabetLetter}  
+                onClick={this.handleGuess} 
+                className={alphabetClassChanger} 
+                disabled={this.state.buttonDisabled} 
+                key={eachAlphabetLetter}>
+                  {eachAlphabetLetter} 
+              </button>
+              )
+          })}
+        </div>
+          
 
 
-            <div>
-              {this.state.alphabet.map(eachAlphabetLetter => {
-              console.log(`${eachAlphabetLetter}`);
-              return(
-                <button value={eachAlphabetLetter} id={eachAlphabetLetter} onClick={this.handleGuess}>
-                  <p>{console.log("HELLO::: " + eachAlphabetLetter)} {eachAlphabetLetter}</p>
-                </button>
-                )
-              })}
-            </div>
 
-
-          <div>
-            <WrongWords wrongGuess={this.state.wrongGuess} />
-          </div>
-
-        <button className="introButton" onClick={this.setHangWord} >
+        <button className="introButton" onClick={this.setHangWord}>
           RESTART
         </button>
-
-
-
+            
+        
       </div>
     );
   }

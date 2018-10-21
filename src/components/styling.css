@@ -1,12 +1,39 @@
 /* FONTS */
-@font-face {
+/* @font-face {
   font-family: 'Vlump Black';
-  src: url('/Users/jeromemac/Development/hangman_game/public/Vlump Black.ttf');
+  src: url('/Users/jeromemac/Development/hangman_game/public/Vlump Black.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'DJB WERECOW OF DANVILLE';
-  src: url('/Users/jeromemac/Development/hangman_game/public/DJB WERECOW OF DANVILLE.ttf');
+  font-family: 'djb_werecow_of_danville';
+  src: url('/Users/jeromemac/Development/hangman_game/public/djb_werecow_of_danville.ttf') format('truetype');
+} */
+
+@font-face {
+  font-family: 'a_box';
+  src: url('../assets/a_box.woff2') format('woff2'),
+       url('../assets/a_box.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'evil_of_frankenstein';
+  src: url('../assets/eviloffrankenstein.woff2') format('woff2'),
+       url('../assets/eviloffrankenstein.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'djb_werecow_of_danville';
+  src: url('../assets/djb_werecow_of_danville.woff2') format('woff2'),
+       url('../assets/djb_werecow_of_danville.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }
 
 
@@ -69,74 +96,122 @@
 }
 
 
+
+
+@keyframes zoomIn {
+  0% {
+    transform:scale(1);
+  }
+  100% {
+    transform:scale(1.5);
+  }
+}
+
+
 /* INTROPAGE STYLING */
 .introPage{
-  background: radial-gradient(circle 1800px, red, black);
+  /* background: radial-gradient(circle 1800px, red, black); */
+  background-image: url('../assets/hangpersonLanding.svg');
   background-repeat: no-repeat;
   background-size: cover;
-  position: fixed;
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+ 
 }
 
-.introTitle{
-  font-family: 'Vlump Black', sans-serif;
-  font-size: 4.5em;
-  margin-bottom: 1%;
-  animation: heartbeat 3s infinite;
+/* might not need to use this after all, this is so movement animation works */
+.introBackgroundImage{
+  /* animation:zoomIn 40s linear infinite alternate; */
+  z-index: -9999;
+  position: absolute;
+  background-image: url('../assets/hangpersonLanding.svg')
+ 
+  
+
+  
 }
+
+.introTitle {
+  
+  color: white;
+  /* mix-blend-mode: overlay; */
+  font-family: 'evil_of_frankenstein', sans-serif;
+  font-size: 15vmin;
+  letter-spacing: 0.1em;
+  text-shadow: 1px 1px black, 
+            2px 2px black, 
+            3px 3px black,            
+            4px 4px black, 
+            5px 5px black,
+            6px 6px black,
+            7px 7px black,
+            8px 8px black,
+            9px 9px black,
+            10px 0px black;
+  animation: heartbeat 3s infinite;
+  margin-bottom: 0%;
+}
+
 
 .introSubtitle{
-  font-family: 'DJB WERECOW OF DANVILLE', serif;
-  font-size: 1.5em;
-  color: black;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  letter-spacing: 1vw;
+  font-family: 'djb_werecow_of_danville', serif;
+  font-size: 3vw;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  letter-spacing: 0vw;
+  mix-blend-mode: overlay;
 }
 
 .introButton{
   background: black;
   color: white;
   border: none;
-  min-width: 10vw;
-  min-height: 3vh;
-  font-size: 1em;
-  font-family: 'Vlump Black', sans-serif;
+  min-width: 6vw;
+  min-height: 2.5vh;
+  font-size:  1.5em;
+  font-family: 'evil_of_frankenstein', sans-serif;
   margin-top: 1%;
+  padding: 1%;
 }
 
 .introButton:hover{
   background: white;
   color: black;
-  border: none;
-  min-width: 10vw;
-  min-height: 3vh;
-  font-size: 1em;
-  font-family: 'Vlump Black', sans-serif;
   animation: shake .25s;
 }
 
 
 /* GAME STYLING */
 
-#letters-container{
+.gamePage{
+  min-width: 100vw;
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../assets/hangpersonGame.svg');
+  background-size: cover;
+}
+
+.hangLettersContainer{
+  display: flex;
+  flex-flow: row wrap;
   justify-content: space-evenly;
+  margin-top: -10%;
 }
 
-.userInput{
-  font-family: 'DJB WERECOW OF DANVILLE', serif;
+/* .userInput{
+  font-family: 'djb_werecow_of_danville', serif;
   font-size: 1.5em;
-}
+} */
 
-.textInputWrap{
+/* .textInputWrap{
   background-color: rgba(0, 0, 0, 0.2);
   padding: .25em;
   border: .25em solid rgba(0, 0, 0, 0.59);
@@ -144,9 +219,9 @@
   max-width: 11vw;
   min-height: 7vh;
   min-height: 7vh;
-}
+} */
 
-#wordGuess{
+/* #wordGuess{
   background: none;
   border: none;
   border-bottom: .05em solid black;
@@ -155,36 +230,152 @@
   min-height: 6vh;
   min-height: 6vh;
   font-size: 4.5em;
-}
+} */
 
 .letters{
   font-size: 6em;
   min-width: 1em;
-  color: black;
-  font-family: 'DJB WERECOW OF DANVILLE', sans-serif;
-  margin-bottom: 1%;
+  color: white;
+  font-family: 'evil_of_frankenstein', sans-serif;
+  margin-bottom: 3vh;
+  line-height: 80%;
+  margin-top: 200%;
 }
 
-#c{
-  /* margin-left: -5%;
-  margin-right:-5%; */
+/* #c{
   color: green;
+} */
+
+.alphabetLettersContainer{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin-top: 2%;
+}
+
+.alphabetClass{
+  background: black;
+  color: white;
+  border: none;
+  min-height: 2vh;
+  min-width: 2vh;
+  font-size: 1em;
+  margin-left: .5px;
+  margin-right: .5px;
+  font-family: 'djb_werecow_of_danville', serif;
+}
+
+.alphabetClass:hover{
+  background: white;
+  color: black;
+  border: none;
+  min-height: 2vh;
+  min-width: 2vh;
+  font-size: 1em;
+  margin-left: .5px;
+  margin-right: .5px;
+}
+
+.alphabetClass:disabled{
+  background: green;
+  color: white;
+  opacity: 0.5
 }
 
 
-/* HANGMAN TESTING: */
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
+
+
+.alphabetClassWrong{
+  /* background: red; */
+  color: white;
+  background: red;
+  opacity: 0.5;
+  border: none;
+  min-height: 2vh;
+  min-width: 2vh;
+  font-size: 1em;
+  margin-left: .5px;
+  margin-right: .5px;
+  font-family: 'djb_werecow_of_danville', serif;
+}
+
+.alphabetClassWrong:before{
+  color: black;
+  background: transparent;
+  opacity: .75;
+  z-index: -1;
+  content: 'X';
+  font-size: 2em;
+  position: absolute;
+  margin-left: -.5%;
+  margin-top: -.5%;
+  
+}
+
+
+/* .wrongGuessLetters{
+ background: white;
+ text-decoration-line: line-through;
+ font-family: 'djb_werecow_of_danville', serif;
+} */
+
+
+/* HANGMAN: */
+
+/* not used, testing: */
+  /* @keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
+
+  .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 2s linear forwards;
+  } */
+
+.hangFigure{
+  min-height: 33vh;
+  max-height: 33vh;
 }
 
-.path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 2s linear forwards;
+#wrongLettersTag{
+  color:#FFF8D2;
+  font-size: 1.5em;
+  font-family: 'djb_werecow_of_danville', serif;
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
-.head{
-
+.wrongLettersContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-width: 33vw;
+  min-height: 11vh;
+  max-width: 33vw;
+  max-height: 11vh;
+  justify-content: center;
+  color:#FFF8D2;
+  font-size: 1.5em;
+  font-family: 'djb_werecow_of_danville', serif;
+  margin-top: 0%;
 }
+
+.wrongLetters{
+  /* color:#FFF8D2; */
+  text-decoration-line: line-through;
+  /* font-size: 1.5em; */
+  margin-right: 2vw;
+  /* font-family: 'djb_werecow_of_danville', serif; */
+  text-align: center;
+  margin-top: -10%;
+}
+
+/* .shit{
+  height: 50px;
+} */
