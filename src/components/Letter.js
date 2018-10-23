@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 
-class Letter extends Component {
-
-  render() {
+const Letter = (props) => {
 
     return (
-      <div className="letters" id={`${this.props.eachLetter}`}> {`${this.props.eachLetter}`} 
+      <div className="letters" id={`${props.eachLetter}`}> 
+        {`${props.eachLetter}`} 
       </div>
-    );
+    )
   }
-}
 
 export default Letter;
