@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
-import './styling.css'
+import '../styling/styling.css'
 import Letter from './Letter'
 import HangmanFigure from './HangmanFigure'
-// import Alphabet from './Alphabet'
 import Scoreboard from './Scoreboard'
-
-import figure1 from '../assets/stick_figure/figure1.svg'
-import figure2 from '../assets/stick_figure/figure2.svg'
-import figure3 from '../assets/stick_figure/figure3.svg'
-import figure4 from '../assets/stick_figure/figure4.svg'
-import figure5 from '../assets/stick_figure/figure5.svg'
-import figure6 from '../assets/stick_figure/figure6.svg'
-
 import randomWords from 'random-words'
 
 

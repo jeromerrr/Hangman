@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './styling.css'
+import '../styling/styling.css'
 
 
 class IntroPage extends Component {
