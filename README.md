@@ -1,4 +1,4 @@
-![Hangperson Icon](Hangman/public/favicon.png)
+![Hangperson Icon](public/favicon.png)
 
 # Hangperson
 
